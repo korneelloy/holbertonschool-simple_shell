@@ -2,19 +2,19 @@
 
 /**
  * _which - return acces path in PATH variable of command
+ * @argc: nb of arguments
+ * @argv: arguments
  *
  * Return: access path
  */
 
 int _which(int argc, char **argv)
 {
-    int i;
-	int j = 1;
-	int counter = 1;
+	int i, j = 1, counter = 1;
 	char *path = getenv("PATH");
 	char **paths_array = NULL;
-	char *single_path= NULL;
-    struct stat st;
+	char *single_path = NULL;
+	struct stat st;
 	char *this_path;
 	(void)argc;
 
@@ -23,19 +23,14 @@ int _which(int argc, char **argv)
 		if (path[i] == ':')
 			counter++;
 	}
-
 	paths_array = malloc(counter * sizeof(char *));
-
 	single_path = strtok(path, ":");
-
 	for (i = 0; i < counter; i++)
 	{
 		paths_array[i] = single_path;
 		single_path = strtok(NULL, ":");
 	}
-
-
-	while(argv[j])
+	while (argv[j])
 	{
 		for (i = 0; i < counter; i++)
 		{
@@ -53,8 +48,6 @@ int _which(int argc, char **argv)
 		}
 		j++;
 	}
-
 	free(paths_array);
-
-    return (0);
+	return (0);
 }
