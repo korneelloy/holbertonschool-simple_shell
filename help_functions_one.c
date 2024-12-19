@@ -113,7 +113,6 @@ char **transform_to_array(char *buffer, int size_read)
 	char **arguments;
 	int i;
 
-
 	number_of_args = counting_words(buffer);
 
 	if (buffer[size_read - 1] == '\n')
@@ -129,7 +128,7 @@ char **transform_to_array(char *buffer, int size_read)
 
 	for (i = 0; argument != NULL; i++)
 	{
-		arguments[i] = strdup(argument);
+		arguments[i] = _strdup(argument);
 		argument = strtok(NULL, " ");
 	}
 
@@ -137,3 +136,55 @@ char **transform_to_array(char *buffer, int size_read)
 
 	return (arguments);
 }
+
+/**
+ * _getenv - get value corresponding to identifier in environment variables
+ * @identifier: identifier of variable
+ *
+ * Return: value corresponding to identifier
+ */
+
+char *_getenv(const char *identifier)
+{
+	extern char **environ;
+	char **cpy_env = environ;
+	char *env_var;
+	char *env_var_var;
+	char *env_var_value;
+	int i, len_tot, len_first, len_second;
+
+	while (*cpy_env)
+	{
+		len_tot = strlen(*cpy_env);
+		env_var = malloc(len_tot * sizeof(char));
+		env_var = *cpy_env;
+		len_first = 0;
+		len_second = 0;
+
+		for (i = 0; i < len_tot; i++)
+		{
+			if (env_var[i] == '=')
+				break;
+			len_first++;
+		}
+		len_second = len_tot - len_first;
+		env_var_var = malloc((len_first + 1) * sizeof(char));
+		env_var_value = malloc((len_second + 1) * sizeof(char));
+		strncpy(env_var_var, env_var, len_first);
+		env_var_var[len_first] = '\0';
+		if (strcmp(identifier, env_var_var) == 0)
+		{
+			strncpy(env_var_value, env_var + len_first + 1, len_second);
+			env_var_value[len_second] = '\0';
+			printf("before:%s\n", env_var_var);
+			printf("after:%s\n", env_var_value);
+			break;
+		}
+		cpy_env++;
+		free(env_var_var);
+		free(env_var);
+		return (env_var_value);
+	}
+	return (NULL);
+}
+

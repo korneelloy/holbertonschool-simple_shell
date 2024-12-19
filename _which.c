@@ -11,7 +11,7 @@
 int _which(int argc, char **argv)
 {
 	int i, j = 1, counter = 1;
-	char *path = getenv("PATH");
+	char *path = _getenv("PATH");
 	char **paths_array = NULL;
 	char *single_path = NULL;
 	struct stat st;

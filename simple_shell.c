@@ -17,7 +17,8 @@ void simple_shell(void)
 		buffer = NULL, arguments = NULL;
 		printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
-		if (feof(stdin) || (int)size_read == -1 || str_comparing(buffer, "exit") == 0)
+		if (feof(stdin) || (int)size_read == -1 ||
+		str_comparing(buffer, "exit") == 0)
 		{
 			free_memory(arguments, buffer);
 			kill(child_process, SIGTERM);
