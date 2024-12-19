@@ -35,7 +35,7 @@ int str_comparing(char *buffer)
 
 	last = buffer[i];
 
-	if (last == NULL || last == ' ' || last == '\0' || last == '\n')
+	if (last == ' ' || last == '\0' || last == '\n')
 		return (0);
 
 	return (-1);

@@ -32,5 +32,6 @@ int free_memory(char **arguments, int i, char *buffer);
 void get_path_linked_list(void);
 void get_path_array(void);
 int _which(int argc, char **argv);
+int simple_shell(void);
 
 #endif

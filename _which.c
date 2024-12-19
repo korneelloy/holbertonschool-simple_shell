@@ -16,7 +16,7 @@ int _which(int argc, char **argv)
 	char *single_path= NULL;
     struct stat st;
 	char *this_path;
-	int last_index;
+	(void)argc;
 
 	for (i = 0; path[i] != '\0'; i++)
 	{

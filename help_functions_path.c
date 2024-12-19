@@ -7,13 +7,10 @@
 void get_path_array()
 {
 	int i;
-	int j = 1;
 	int counter = 1;
 	char *path = getenv("PATH");
 	char **paths_array = NULL;
 	char *single_path= NULL;
-	char *this_path;
-	int last_index;
 
 	for (i = 0; path[i] != '\0'; i++)
 	{
@@ -47,12 +44,9 @@ void get_path_array()
 void get_path_linked_list()
 {
 	int i;
-	int j = 1;
 	int counter = 1;
 	char *path = getenv("PATH");
 	char *single_path= NULL;
-	char *this_path;
-	int last_index;
 	path_t *root;
 	path_t *current;
 	path_t *printing;

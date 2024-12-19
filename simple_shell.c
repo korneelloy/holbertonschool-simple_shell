@@ -11,7 +11,7 @@ int simple_shell(void)
 size_t size_read, size_to_read;
 	char *buffer, *argument;
 	char **arguments;
-	int i, j, status, number_of_args = 0;
+	int i, status, number_of_args = 0;
 	char *envp[] = { NULL };
 	pid_t child_process = 0;
 
@@ -21,7 +21,7 @@ size_t size_read, size_to_read;
 		buffer = NULL, argument = NULL, arguments = NULL;
 		printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
-		if (size_read == -1)
+		if ((int)size_read == -1)
 			return (-1);
 		if (str_comparing(buffer) == 0)
 		{
