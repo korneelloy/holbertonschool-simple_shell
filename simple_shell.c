@@ -9,10 +9,8 @@
 int simple_shell(void)
 {
 size_t size_read, size_to_read;
-	char *buffer, *argument;
-	char **arguments;
+	char *buffer, *argument, **arguments, *envp[] = { NULL };
 	int i, status, number_of_args = 0;
-	char *envp[] = { NULL };
 	pid_t child_process = 0;
 
 	while (1)
@@ -34,7 +32,8 @@ size_t size_read, size_to_read;
 			buffer[size_read - 1] = '\0';
 		argument = strtok(buffer, " ");
 		arguments = malloc((number_of_args + 1) * sizeof(char *));
-		i = 0;
+		if (arguments == NULL)
+			continue;
 		for (i = 0; argument != NULL; i++)
 		{
 			arguments[i] = strdup(argument);
@@ -43,7 +42,8 @@ size_t size_read, size_to_read;
 		arguments[i] = NULL;
 		child_process = fork();
 		if (child_process == 0)
-			execve(arguments[0], arguments, envp);
+			if (execve(arguments[0], arguments, envp) == -1)
+				printf("No such file or directory\n");
 		wait(&status);
 		free_memory(arguments, i, buffer);
 	}
