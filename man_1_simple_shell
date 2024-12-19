@@ -1,0 +1,102 @@
+.TH _SIMPLE SHELL
+
+.SH NAME
+_SIMPLE SHELL - a tool for printing data to the standard output
+
+.SH SYNOPSIS
+.B _printf
+.RI (FORMAT, [ARGUMENT...])
+
+.SH DESCRIPTION
+The _printf function takes a first argument (FORMAT) and prints it, as such, to the standard output. 
+.br
+
+When a format specifier (recognisable with % sign) is encountered in this first argument, the format specifier
+.br
+will be exchanged with the next argument, in the ARGUMENT list.
+.br
+
+The _printf function returns the number of printed characters
+
+.sp
+The format specifiers are:
+.br
+%c will be replaced by the next argument in the argument list, which is expected to be a character
+.br
+%s will be replaced by the next argument in the argument list, which is expected to be a string
+.br
+%d will be replaced by the next argument in the argument list, which is expected to be an integer
+.br
+%i will be replaced by the next argument in the argument list, which is expected to be an integer base ten
+.br
+%b will be replaced by the next argument in the argument list, which is expected to be an integer base ten, in binary version
+.br
+%o will be replaced by the next argument in the argument list, which is expected to be an integer base ten, in octal version
+.br
+%u will be replaced by the next argument in the argument list, which is expected to be an integer base ten
+.br
+%x will be replaced by the next argument in the argument list, which is expected to be an integer base ten, in hexadecimal version, lowercase
+.br
+%X will be replaced by the next argument in the argument list, which is expected to be an integer base ten, in hexadecimal version, uppercase
+.br
+If a %% is encountered, a single % will be printed
+.br
+If the %-sign is followed by another character, the % and the character will be printed as normal characters
+
+
+.sp
+
+\\ is used as the escape character :
+.br
+If the escape character is used just in front of special characters such as \\, ", ' these characters lose their special meaning and will be printed as such.
+.br
+On the contrary, the escape character can also be used with some 'normal' letters to add some special behaviour:
+.br
+\\n will go to the next line
+.br
+\\a creates an alert with a beep sound
+.br
+\\b backspace
+.br
+\\f moves cursor to next page
+.br
+\\r moves cursor to beginning of the current line
+.br
+\\t tab
+.br
+\\v moves cursor to next vertical stop
+
+.SH EXAMPLES
+.TP
+_printf("Test");
+will print Test to the stdout
+
+.TP
+_printf("%s", "Test");
+will do the same thing
+
+.TP
+char *name = "Joe";
+.sp -1
+.TP
+_printf("My name is %s.", name);
+will print My name is Joe. to the stdout
+
+.TP
+char age = 20;
+.sp -1
+.TP
+_printf("I'm %d years old.", age);
+will print I'm 20 years old. to the stdout
+
+
+.SH EXIT STATUS
+.TP
+.B On success
+The functions returns the number of bytes printed
+.TP
+.B On error 
+The program returns -1
+
+.SH AUTHOR
+Written by Arthur Urbano <9323@holbertonstudents.com> & Korneel Loy <9795@holbertonstudents.com>
