@@ -7,7 +7,8 @@
 void simple_shell(void)
 {
 	size_t size_read, size_to_read;
-	char *buffer, **arguments, *envp[] = { NULL };
+	char *buffer, **arguments;
+	extern char **environ;
 	int status;
 	pid_t child_process = 0;
 
@@ -17,17 +18,23 @@ void simple_shell(void)
 		buffer = NULL, arguments = NULL;
 		printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
-
+ 		if ((int)size_read == -1)
+        {
+            if (buffer)
+                free(buffer);
+            printf("\nlogout\n");
+            exit(0);
+        }
 		arguments = transform_to_array(buffer, size_read);
 		child_process = fork();
-		if ((int)size_read == -1 || str_comparing(buffer, "exit") == 0)
+		if (str_comparing(buffer, "exit") == 0)
 		{
 			free_memory(arguments, buffer);
 			kill(child_process, SIGTERM);
 			exit(0);
 		}
 		if (child_process == 0)
-			if (execve(arguments[0], arguments, envp) == -1)
+			if (execve(arguments[0], arguments, environ) == -1)
 			{
 				printf("No such file or directory\n");
 				free_memory(arguments, buffer);
