@@ -33,6 +33,5 @@ int _which(int argc, char **argv);
 void simple_shell(void);
 char **transform_to_array(char *buffer, int size_read);
 char *_getenv(const char *identifier);
-char *_strdup(char *words);
 
 #endif

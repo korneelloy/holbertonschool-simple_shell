@@ -49,7 +49,7 @@ void get_path_linked_list(void)
 	root = malloc(sizeof(path_t));
 	if (root == NULL)
 		return;
-	root->path = _strdup(single_path);
+	root->path = strdup(single_path);
 	if (root->path == NULL)
 	{
 		free(root);
@@ -61,10 +61,10 @@ void get_path_linked_list(void)
 		current->next = malloc(sizeof(path_t));
 		current = current->next;
 		single_path = strtok(NULL, ":");
-		current->path = _strdup(single_path);
+		current->path = strdup(single_path);
 	}
 	single_path = strtok(NULL, ":");
-	current->path = _strdup(single_path);
+	current->path = strdup(single_path);
 	current->next = NULL;
 	printing = root;
 	while (printing != NULL)
@@ -72,28 +72,4 @@ void get_path_linked_list(void)
 		printf("%s\n", printing->path);
 		printing = printing->next;
 	}
-}
-
-
-/**
- * _strdup - allocates memory and creates a copy of the string
- * @words: the string to duplicate
- *
- * Return: pointer to new string
- */
-
-char *_strdup(char *words)
-{
-	int len, i;
-	char *new_word;
-
-	for (len = 0; words[len] != '\0'; len++)
-		continue;
-
-	new_word = malloc((len + 1) * sizeof(char));
-
-	for (i = 0; i < len; i++)
-		words[i] = new_word[i];
-
-	return (new_word);
 }

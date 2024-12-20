@@ -128,7 +128,7 @@ char **transform_to_array(char *buffer, int size_read)
 
 	for (i = 0; argument != NULL; i++)
 	{
-		arguments[i] = _strdup(argument);
+		arguments[i] = strdup(argument);
 		argument = strtok(NULL, " ");
 	}
 
