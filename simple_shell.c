@@ -17,18 +17,21 @@ void simple_shell(void)
 		buffer = NULL, arguments = NULL;
 		printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
+
+		arguments = transform_to_array(buffer, size_read);
+		child_process = fork();
 		if ((int)size_read == -1 || str_comparing(buffer, "exit") == 0)
 		{
 			free_memory(arguments, buffer);
 			kill(child_process, SIGTERM);
 			exit(0);
 		}
-
-		arguments = transform_to_array(buffer, size_read);
-		child_process = fork();
 		if (child_process == 0)
 			if (execve(arguments[0], arguments, envp) == -1)
+			{
 				printf("No such file or directory\n");
+				free_memory(arguments, buffer);
+			}
 		wait(&status);
 		free_memory(arguments, buffer);
 	}

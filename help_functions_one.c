@@ -27,7 +27,7 @@ int str_comparing(char *buffer, char *comparison)
 	}
 
 
-	for (len = 0; comparison[len] != '\0'; len++)
+	for (len = 0; comparison[len] != '\n' && comparison[len] != '\0'; len++)
 		continue;
 
 
@@ -44,6 +44,7 @@ int str_comparing(char *buffer, char *comparison)
 	{
 		return (0);
 	}
+
 	return (-1);
 }
 
@@ -122,13 +123,14 @@ char **transform_to_array(char *buffer, int size_read)
 	argument = strtok(buffer, " ");
 
 	arguments = malloc((number_of_args + 1) * sizeof(char *));
-
 	if (arguments == NULL)
 		return (NULL);
 
 	for (i = 0; argument != NULL; i++)
 	{
 		arguments[i] = strdup(argument);
+		if (arguments[i] == NULL)
+			return (NULL);
 		argument = strtok(NULL, " ");
 	}
 
@@ -148,15 +150,14 @@ char *_getenv(const char *identifier)
 {
 	extern char **environ;
 	char **cpy_env = environ;
-	char *env_var;
-	char *env_var_var;
-	char *env_var_value;
-	int i, len_tot, len_first, len_second;
+	char *env_var = NULL;
+	char *env_var_var = NULL;
+	char *env_var_value = NULL;
+	int i, len_tot, len_first = 0, len_second;
 
 	while (*cpy_env)
 	{
 		len_tot = strlen(*cpy_env);
-		env_var = malloc(len_tot * sizeof(char));
 		env_var = *cpy_env;
 		len_first = 0;
 		len_second = 0;
@@ -168,8 +169,6 @@ char *_getenv(const char *identifier)
 			len_first++;
 		}
 		len_second = len_tot - len_first;
-		env_var_var = malloc((len_first + 1) * sizeof(char));
-		env_var_value = malloc((len_second + 1) * sizeof(char));
 		strncpy(env_var_var, env_var, len_first);
 		env_var_var[len_first] = '\0';
 		if (strcmp(identifier, env_var_var) == 0)
@@ -181,8 +180,6 @@ char *_getenv(const char *identifier)
 			break;
 		}
 		cpy_env++;
-		free(env_var_var);
-		free(env_var);
 		return (env_var_value);
 	}
 	return (NULL);
