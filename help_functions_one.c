@@ -136,9 +136,6 @@ char **transform_to_array(char *buffer, int size_read)
 		strcpy(arguments[i], argument);
 		argument = strtok(NULL, sep);
 	}
-
-	arguments[i] = NULL;
-
 	return (arguments);
 }
 
