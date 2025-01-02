@@ -1,0 +1,30 @@
+.TH _SIMPLE SHELL
+
+.SH NAME
+_SIMPLE SHELL - a simple UNIX command interpretor
+
+.SH DESCRIPTION
+The _simple_shell program behaves in the exact same way as the sh 
+.br
+The _simple_shell will display a prompt and wait for the user to type a command
+.br
+A command line always ends with a new line.
+.br
+The prompt is displayed again each time a command has been executed.
+.br
+The command lines can take arguments
+.br
+The first command will be considered as the command to be executed
+.br
+additional arguments will be considered as arguments to this first command
+.br
+the command will be searched for in the PATH
+.br
+the 'exit' command will exit the program
+.br
+If an executable cannot be found, an error message is printed and the prompt is displayed again.
+.br
+the 'env' command prints the actual environment
+
+.SH AUTHOR
+Written by Luke Holley-Boutillier <9972@holbertonstudents.com> & Korneel Loy <9795@holbertonstudents.com>
