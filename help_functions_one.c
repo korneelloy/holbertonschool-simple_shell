@@ -117,12 +117,6 @@ char **transform_to_array(char *buffer, int size_read)
 	(void) size_read;
 
 	number_of_args = counting_words(buffer);
-/**
-*	if (buffer[size_read - 1] == '\n')
-*	{
-*		buffer[size_read - 1] = '\0';
-*	}
-*/
 	arguments = malloc((number_of_args + 1) * sizeof(char *));
 	if (arguments == NULL)
 		return (NULL);
@@ -136,7 +130,7 @@ char **transform_to_array(char *buffer, int size_read)
 		strcpy(arguments[i], argument);
 		argument = strtok(NULL, sep);
 	}
-
+	arguments[i] = NULL;
 	return (arguments);
 }
 
