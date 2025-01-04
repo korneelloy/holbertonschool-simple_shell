@@ -7,8 +7,7 @@
 void simple_shell(void)
 {
 	size_t size_read, size_to_read;
-	char *buffer, **arguments;
-	extern char **environ;
+	char *buffer, *command, **arguments;
 	int status;
 	pid_t child_process = 0;
 
@@ -33,16 +32,17 @@ void simple_shell(void)
 			exit(0);
 		}
 		arguments = transform_to_array(buffer, size_read);
-		child_process = fork();
-		if (child_process == 0)
+		command = _which(arguments[0]);
+		if (command == NULL)
+			printf("No such file or directory\n");
+		if (command != NULL)
 		{
-			if (execve(arguments[0], arguments, environ) == -1)
-			{
-				printf("No such file or directory\n");
-				free_memory(arguments, buffer);
-			}
+			child_process = fork();
+			if (child_process == 0)
+				if (execve(command, arguments, environ) == -1)
+					printf("No such file or directory\n");
+			wait(&status);
 		}
-		wait(&status);
 		free_memory(arguments, buffer);
 	}
 }

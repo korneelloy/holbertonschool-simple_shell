@@ -24,12 +24,14 @@ typedef struct path_struct
 	struct path_struct *next;
 } path_t;
 
+extern char **environ;
+
 int str_comparing(char *buffer, char *comparison);
 int counting_words(char *sentence);
 int free_memory(char **arguments, char *buffer);
 void get_path_linked_list(void);
 void get_path_array(void);
-int _which(int argc, char **argv);
+char *_which(char *argv);
 void simple_shell(void);
 char **transform_to_array(char *buffer, int size_read);
 char *_getenv(const char *identifier);

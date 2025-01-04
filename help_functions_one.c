@@ -143,7 +143,6 @@ char **transform_to_array(char *buffer, int size_read)
 
 char *_getenv(const char *identifier)
 {
-	extern char **environ;
 	char **cpy_env = environ;
 	char *env_var = NULL;
 	char *env_var_var = NULL;
@@ -162,20 +161,22 @@ char *_getenv(const char *identifier)
 			if (env_var[i] == '=')
 				break;
 			len_first++;
+
 		}
 		len_second = len_tot - len_first;
+		env_var_var = malloc(len_first + 1);
 		strncpy(env_var_var, env_var, len_first);
 		env_var_var[len_first] = '\0';
 		if (strcmp(identifier, env_var_var) == 0)
 		{
+			env_var_value = malloc(len_second + 1);
 			strncpy(env_var_value, env_var + len_first + 1, len_second);
 			env_var_value[len_second] = '\0';
-			printf("before:%s\n", env_var_var);
-			printf("after:%s\n", env_var_value);
-			break;
+			return (env_var_value);
 		}
 		cpy_env++;
-		return (env_var_value);
+		free(env_var_var);
+		free(env_var_value);
 	}
 	return (NULL);
 }

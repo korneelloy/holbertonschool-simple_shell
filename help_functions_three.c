@@ -2,21 +2,24 @@
 
 /**
  * _which - return acces path in PATH variable of command
- * @argc: nb of arguments
- * @argv: arguments
+ * @typed_path: the path or command typed in by user
  *
  * Return: access path
  */
 
-int _which(int argc, char **argv)
+char *_which(char *typed_path)
 {
-	int i, j = 1, counter = 1;
-	char *path = _getenv("PATH");
+	int i, counter = 1;
+	char *path = NULL;
 	char **paths_array = NULL;
 	char *single_path = NULL;
 	struct stat st;
 	char *this_path;
-	(void)argc;
+
+	if (stat(typed_path, &st) == 0)
+		return (typed_path);
+
+	path = _getenv("PATH");
 
 	for (i = 0; path[i] != '\0'; i++)
 	{
@@ -30,24 +33,17 @@ int _which(int argc, char **argv)
 		paths_array[i] = single_path;
 		single_path = strtok(NULL, ":");
 	}
-	while (argv[j])
+
+	for (i = 0; i < counter; i++)
 	{
-		for (i = 0; i < counter; i++)
-		{
-			this_path = malloc(strlen(paths_array[i]) + strlen(argv[j]) + 1);
-			this_path = strcpy(this_path, paths_array[i]);
-			this_path = strcat(this_path, "/");
-			this_path = strcat(this_path, argv[j]);
-			if (stat(this_path, &st) == 0)
-			{
-				printf("%s\n", this_path);
-				free(this_path);
-				break;
-			}
-			free(this_path);
-		}
-		j++;
+		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 1);
+		this_path = strcpy(this_path, paths_array[i]);
+		this_path = strcat(this_path, "/");
+		this_path = strcat(this_path, typed_path);
+		if (stat(this_path, &st) == 0)
+			return (this_path);
 	}
+	free(this_path);
 	free(paths_array);
-	return (0);
+	return (NULL);
 }
