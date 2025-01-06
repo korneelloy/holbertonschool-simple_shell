@@ -2,6 +2,7 @@
 
 /**
  * simple_shell - an application imitating shell
+ * @argv: arguments to main
  */
 
 void simple_shell(char **argv)
@@ -18,14 +19,15 @@ void simple_shell(char **argv)
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
-		if ((int)size_read == -1)
-			exit(0);
-		if (check_empty(buffer) == 0)
-			continue;
-		if (str_comparing(buffer, "exit") == 0)
+		if ((int)size_read == -1 || str_comparing(buffer, "exit") == 0)
 		{
-			free_memory(arguments);
+			free(buffer);
 			exit(0);
+		}
+		if (check_empty(buffer) == 0)
+		{
+			free(buffer);
+			continue;
 		}
 		arguments = transform_to_array(buffer, size_read);
 		command = _which(arguments[0]);
