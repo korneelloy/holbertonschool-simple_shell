@@ -15,18 +15,15 @@ void simple_shell(void)
 	{
 		size_read = 0, size_to_read = 0;
 		buffer = NULL, arguments = NULL;
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
 		size_read = getline(&buffer, &size_to_read, stdin);
 		if ((int)size_read == -1)
-		{
-			printf("\nlogout\n");
 			exit(0);
-		}
 		if (check_empty(buffer) == 0)
 			continue;
 		if (str_comparing(buffer, "exit") == 0)
 		{
-			free(buffer);
 			free_memory(arguments);
 			exit(0);
 		}
