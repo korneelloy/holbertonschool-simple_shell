@@ -51,7 +51,7 @@ char *_which(char *typed_path)
 
 /**
  * check_empty - checks if string is empty
- * @bugger: string
+ * @buffer: string
  *
  * Return: 0 if empty, 1 if not
  */
