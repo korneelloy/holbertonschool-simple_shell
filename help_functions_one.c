@@ -73,7 +73,6 @@ int counting_words(char *sentence)
 /**
  * free_memory - freeing the memory that was allocated
  * @arguments: double pointer to list of arguments
- * @buffer: the pointer to the buffer created by getline function
  *
  * Return:0 on succes
  */
@@ -119,6 +118,8 @@ char **transform_to_array(char *buffer, int size_read)
 	if (arguments == NULL)
 		return (NULL);
 	copy_buffer = malloc(strlen(buffer) + 1);
+	if (copy_buffer == NULL)
+		return (NULL);
 	strcpy(copy_buffer, buffer);
 	argument = strtok(copy_buffer, sep);
 	for (i = 0; argument != NULL; i++)
@@ -162,15 +163,18 @@ char *_getenv(const char *identifier)
 			if (env_var[i] == '=')
 				break;
 			len_first++;
-
 		}
 		len_second = len_tot - len_first;
 		env_var_var = malloc(len_first + 1);
+		if (env_var_var == NULL)
+			return (NULL);
 		strncpy(env_var_var, env_var, len_first);
 		env_var_var[len_first] = '\0';
 		if (strcmp(identifier, env_var_var) == 0)
 		{
 			env_var_value = malloc(len_second + 1);
+			if (env_var_value == NULL)
+				return (NULL);
 			strncpy(env_var_value, env_var + len_first + 1, len_second);
 			env_var_value[len_second] = '\0';
 			free(env_var_var);

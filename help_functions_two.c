@@ -10,11 +10,8 @@
 char *_which(char *typed_path)
 {
 	int i, counter = 1;
-	char *path = NULL;
-	char **paths_array = NULL;
-	char *single_path = NULL;
+	char *path = NULL, **paths_array = NULL, *single_path = NULL, *this_path;
 	struct stat st;
-	char *this_path;
 
 	if (stat(typed_path, &st) == 0)
 		return (typed_path);
@@ -25,6 +22,8 @@ char *_which(char *typed_path)
 			counter++;
 	}
 	paths_array = malloc(counter * sizeof(char *));
+	if (paths_array == NULL)
+		return (NULL);
 	single_path = strtok(path, ":");
 	for (i = 0; i < counter; i++)
 	{
@@ -34,6 +33,8 @@ char *_which(char *typed_path)
 	for (i = 0; i < counter; i++)
 	{
 		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 2);
+		if (this_path == NULL)
+			return (NULL);
 		strcpy(this_path, paths_array[i]);
 		strcat(this_path, "/");
 		strcat(this_path, typed_path);

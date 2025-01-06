@@ -37,10 +37,14 @@ void simple_shell(char **argv)
 		{
 			child_process = fork();
 			if (child_process == 0)
+			{
 				if (execve(command, arguments, environ) == -1)
 					printf("No such file or directory\n");
+			}
 			wait(&status);
 		}
+		free(command);
+		free(buffer);
 		free_memory(arguments);
 	}
 }
