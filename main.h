@@ -30,7 +30,7 @@ int str_comparing(char *buffer, char *comparison);
 int counting_words(char *sentence);
 int free_memory(char **arguments);
 char *_which(char *argv);
-void simple_shell(void);
+void simple_shell(char **argv);
 char **transform_to_array(char *buffer, int size_read);
 char *_getenv(const char *identifier);
 

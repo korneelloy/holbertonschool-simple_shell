@@ -4,7 +4,7 @@
  * simple_shell - an application imitating shell
  */
 
-void simple_shell(void)
+void simple_shell(char **argv)
 {
 	size_t size_read, size_to_read;
 	char *buffer, *command, **arguments;
@@ -30,7 +30,7 @@ void simple_shell(void)
 		arguments = transform_to_array(buffer, size_read);
 		command = _which(arguments[0]);
 		if (command == NULL)
-			printf("No such file or directory\n");
+			printf("%s: 1: %s: not found\n", argv[0], arguments[0]);
 		if (command != NULL)
 		{
 			child_process = fork();

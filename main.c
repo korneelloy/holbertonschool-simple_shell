@@ -6,8 +6,10 @@
  * Return: 0 on succes
  */
 
-int main(void)
+int main(int argc, char **argv)
 {
-	simple_shell();
+	(void) argc;
+
+	simple_shell(argv);
 	return (0);
 }
