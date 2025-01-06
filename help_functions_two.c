@@ -18,9 +18,7 @@ char *_which(char *typed_path)
 
 	if (stat(typed_path, &st) == 0)
 		return (typed_path);
-
 	path = _getenv("PATH");
-
 	for (i = 0; path[i] != '\0'; i++)
 	{
 		if (path[i] == ':')
@@ -33,7 +31,6 @@ char *_which(char *typed_path)
 		paths_array[i] = single_path;
 		single_path = strtok(NULL, ":");
 	}
-
 	for (i = 0; i < counter; i++)
 	{
 		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 2);
@@ -51,7 +48,6 @@ char *_which(char *typed_path)
 	free(paths_array);
 	free(path);
 	return (NULL);
-
 }
 
 /**
@@ -63,7 +59,7 @@ char *_which(char *typed_path)
 
 int check_empty(char *buffer)
 {
-	 long unsigned int i;
+	unsigned long int i;
 
 	if (buffer == NULL)
 		return (0);
