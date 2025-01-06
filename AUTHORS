@@ -1,1 +1,16 @@
-authors page
+# AUTHORS
+This file lists the authors and contributors to the project Simple Shell
+
+Authors:
+- Name: Luke Holley-Boutillier
+- Role: Developer, bug fixes, documentation.
+- Contact: 9972@holbertonstudents.com
+
+- Name: Korneel Loy
+- Role: Developer, bug fixes, documentation.
+- Contact: 9795@holbertonstudents.com
+
+
+Acknowledgments:
+- Holberton School for letting us suffer at the hands of C programming.
+-

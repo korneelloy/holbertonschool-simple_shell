@@ -17,7 +17,7 @@ int str_comparing(char *buffer, char *comparison)
 	int i = 0, j = 0, len = 0;
 	char last;
 
-	if (buffer == NULL)
+	if (buffer == NULL || comparison == NULL)
 		return (-1);
 
 	for (i = 0; buffer[i]; i++)
@@ -26,10 +26,7 @@ int str_comparing(char *buffer, char *comparison)
 			break;
 	}
 
-
-	for (len = 0; comparison[len] != '\n' && comparison[len] != '\0'; len++)
-		continue;
-
+	len = strlen(comparison);
 
 	for (j = 0; j < len; j++)
 	{
@@ -60,12 +57,14 @@ int counting_words(char *sentence)
 	int i;
 	int nb_of_words = 0;
 
+	if (sentence == NULL || sentence[0] == '\0')
+		return (0);
 	for (i = 0; sentence[i] != '\n'; i++)
 	{
 		if (sentence[i] != ' ' && nb_of_words == 0)
 			nb_of_words++;
-		else if (sentence[i] == ' ' && sentence[i + 1] != ' '
-		&& sentence[i + 1] != '\n')
+		else if (sentence[i] == ' ' && sentence[i + 1] != '\0'
+		&& sentence[i + 1] != ' ' && sentence[i + 1] != '\n')
 			nb_of_words++;
 	}
 	return (nb_of_words);
@@ -83,18 +82,23 @@ int free_memory(char **arguments, char *buffer)
 {
 	int j = 0;
 
-
-	while (arguments && arguments[j] != NULL)
+	if (arguments)
 	{
-		free(arguments[j]);
-		j++;
+		while (arguments[j] != NULL)
+		{
+			free(arguments[j]);
+			arguments[j] = NULL;
+			j++;
+		}
+		free(arguments);
+		arguments = NULL;
 	}
 
-	if (arguments)
-		free(arguments);
-
 	if (buffer)
+	{
 		free(buffer);
+		buffer = NULL;
+	}
 
 	return (0);
 }

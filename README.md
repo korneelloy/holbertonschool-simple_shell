@@ -1,4 +1,4 @@
-# PRINTF FUNCTION  
+# SIMPLE SHELL 
 ## Plan
 #### 1 - Description
 #### 2 - Compilation
@@ -77,4 +77,4 @@ stdout: %
 ## **Flowchart**
 ![flowchart](image/final_flowchart.png)
 #### *Authors*
-Korneel Loy - Arthur Urbano
+Korneel Loy & Luke Holley-Boutillier
