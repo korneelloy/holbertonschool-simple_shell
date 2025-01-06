@@ -36,15 +36,20 @@ char *_which(char *typed_path)
 
 	for (i = 0; i < counter; i++)
 	{
-		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 1);
-		this_path = strcpy(this_path, paths_array[i]);
-		this_path = strcat(this_path, "/");
-		this_path = strcat(this_path, typed_path);
+		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 2);
+		strcpy(this_path, paths_array[i]);
+		strcat(this_path, "/");
+		strcat(this_path, typed_path);
 		if (stat(this_path, &st) == 0)
+		{
+			free(paths_array);
+			free(path);
 			return (this_path);
+		}
+		free(this_path);
 	}
-	free(this_path);
 	free(paths_array);
+	free(path);
 	return (NULL);
 
 }
