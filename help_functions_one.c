@@ -78,7 +78,7 @@ int counting_words(char *sentence)
  * Return:0 on succes
  */
 
-int free_memory(char **arguments, char *buffer)
+int free_memory(char **arguments)
 {
 	int j = 0;
 
@@ -92,12 +92,6 @@ int free_memory(char **arguments, char *buffer)
 		}
 		free(arguments);
 		arguments = NULL;
-	}
-
-	if (buffer)
-	{
-		free(buffer);
-		buffer = NULL;
 	}
 
 	return (0);
@@ -114,7 +108,7 @@ int free_memory(char **arguments, char *buffer)
 char **transform_to_array(char *buffer, int size_read)
 {
 	int number_of_args = 0;
-	char *argument;
+	char *argument, *copy_buffer;
 	char **arguments;
 	int i, len;
 	char *sep = " \n";
@@ -124,7 +118,9 @@ char **transform_to_array(char *buffer, int size_read)
 	arguments = malloc((number_of_args + 1) * sizeof(char *));
 	if (arguments == NULL)
 		return (NULL);
-	argument = strtok(buffer, sep);
+	copy_buffer = malloc(strlen(buffer) + 1);
+	strcpy(copy_buffer, buffer);
+	argument = strtok(copy_buffer, sep);
 	for (i = 0; argument != NULL; i++)
 	{
 		len = strlen(argument);
@@ -135,6 +131,7 @@ char **transform_to_array(char *buffer, int size_read)
 		argument = strtok(NULL, sep);
 	}
 	arguments[i] = NULL;
+	free(copy_buffer);
 	return (arguments);
 }
 

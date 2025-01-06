@@ -46,4 +46,26 @@ char *_which(char *typed_path)
 	free(this_path);
 	free(paths_array);
 	return (NULL);
+
+}
+
+/**
+ * check_empty - checks if string is empty
+ * @bugger: string
+ *
+ * Return: 0 if empty, 1 if not
+ */
+
+int check_empty(char *buffer)
+{
+	 long unsigned int i;
+
+	if (buffer == NULL)
+		return (0);
+	for (i = 0; i < strlen(buffer); i++)
+	{
+		if (buffer[i] != ' ' && buffer[i] != '\0' && buffer[i] != '\n')
+			return (1);
+	}
+	return (0);
 }
