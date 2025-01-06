@@ -1,16 +1,25 @@
 #include "main.h"
 
 /**
- * get_path_array - gets the path and print it in an array
+ * _which - return acces path in PATH variable of command
+ * @typed_path: the path or command typed in by user
+ *
+ * Return: access path
  */
 
-void get_path_array(void)
+char *_which(char *typed_path)
 {
-	int i;
-	int counter = 1;
-	char *path = _getenv("PATH");
+	int i, counter = 1;
+	char *path = NULL;
 	char **paths_array = NULL;
 	char *single_path = NULL;
+	struct stat st;
+	char *this_path;
+
+	if (stat(typed_path, &st) == 0)
+		return (typed_path);
+
+	path = _getenv("PATH");
 
 	for (i = 0; path[i] != '\0'; i++)
 	{
@@ -24,52 +33,39 @@ void get_path_array(void)
 		paths_array[i] = single_path;
 		single_path = strtok(NULL, ":");
 	}
+
 	for (i = 0; i < counter; i++)
-		printf("%s\n", paths_array[i]);
+	{
+		this_path = malloc(strlen(paths_array[i]) + strlen(typed_path) + 1);
+		this_path = strcpy(this_path, paths_array[i]);
+		this_path = strcat(this_path, "/");
+		this_path = strcat(this_path, typed_path);
+		if (stat(this_path, &st) == 0)
+			return (this_path);
+	}
+	free(this_path);
 	free(paths_array);
+	return (NULL);
+
 }
 
 /**
- * get_path_linked_list - gets the path and print it in a linked list
+ * check_empty - checks if string is empty
+ * @buffer: string
+ *
+ * Return: 0 if empty, 1 if not
  */
 
-void get_path_linked_list(void)
+int check_empty(char *buffer)
 {
-	int i, counter = 1;
-	char *path = _getenv("PATH");
-	char *single_path = NULL;
-	path_t *root, *current, *printing;
+	 long unsigned int i;
 
-	for (i = 0; path[i] != '\0'; i++)
+	if (buffer == NULL)
+		return (0);
+	for (i = 0; i < strlen(buffer); i++)
 	{
-		if (path[i] == ':')
-			counter++;
+		if (buffer[i] != ' ' && buffer[i] != '\0' && buffer[i] != '\n')
+			return (1);
 	}
-	single_path = strtok(path, ":");
-	root = malloc(sizeof(path_t));
-	if (root == NULL)
-		return;
-	root->path = strdup(single_path);
-	if (root->path == NULL)
-	{
-		free(root);
-		return;
-	}
-	current = root;
-	for (i = 0; i < (counter - 2) ; i++)
-	{
-		current->next = malloc(sizeof(path_t));
-		current = current->next;
-		single_path = strtok(NULL, ":");
-		current->path = strdup(single_path);
-	}
-	single_path = strtok(NULL, ":");
-	current->path = strdup(single_path);
-	current->next = NULL;
-	printing = root;
-	while (printing != NULL)
-	{
-		printf("%s\n", printing->path);
-		printing = printing->next;
-	}
+	return (0);
 }

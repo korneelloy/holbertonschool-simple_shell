@@ -173,6 +173,7 @@ char *_getenv(const char *identifier)
 			env_var_value = malloc(len_second + 1);
 			strncpy(env_var_value, env_var + len_first + 1, len_second);
 			env_var_value[len_second] = '\0';
+			free (env_var_var);
 			return (env_var_value);
 		}
 		cpy_env++;
@@ -181,4 +182,3 @@ char *_getenv(const char *identifier)
 	}
 	return (NULL);
 }
-
