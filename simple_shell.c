@@ -26,6 +26,7 @@ void simple_shell(void)
 			continue;
 		if (str_comparing(buffer, "exit") == 0)
 		{
+			free(buffer);
 			free_memory(arguments);
 			exit(0);
 		}
