@@ -2,10 +2,9 @@
 
 /**
  * simple_shell - an application imitating shell
- * @argv: arguments to main
  */
 
-void simple_shell(char **argv)
+void simple_shell(void)
 {
 	size_t size_read, size_to_read;
 	char *buffer, *command, **arguments;
@@ -32,14 +31,14 @@ void simple_shell(char **argv)
 		arguments = transform_to_array(buffer, size_read);
 		command = _which(arguments[0]);
 		if (command == NULL)
-			printf("%s: 1: %s: not found\n", argv[0], arguments[0]);
+			fprintf(stderr, "%s\n", strerror(errno));
 		if (command != NULL)
 		{
 			child_process = fork();
 			if (child_process == 0)
 			{
 				if (execve(command, arguments, environ) == -1)
-					printf("No such file or directory\n");
+					fprintf(stderr, "%s\n", strerror(errno));
 			}
 			wait(&status);
 		}

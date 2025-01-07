@@ -2,16 +2,11 @@
 
 /**
  * main - entry point of program
- * @argc: number of arguments to main
- * @argv: arguments to main
- *
  * Return: 0 on succes
  */
 
-int main(int argc, char **argv)
+int main(void)
 {
-	(void) argc;
-
-	simple_shell(argv);
+	simple_shell();
 	return (0);
 }
