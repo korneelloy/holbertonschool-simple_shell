@@ -33,7 +33,8 @@ char *_which(char *argv);
 void simple_shell(char **argv);
 char **transform_to_array(char *buffer, int size_read);
 char *_getenv(const char *identifier);
-
 int check_empty(char *buffer);
+void free_path(char *path, char **paths_array);
+int count_paths(char *path);
 
 #endif

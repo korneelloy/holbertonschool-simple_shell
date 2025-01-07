@@ -14,13 +14,15 @@ char *_which(char *typed_path)
 	struct stat st;
 
 	if (stat(typed_path, &st) == 0)
-		return (typed_path);
-	path = _getenv("PATH");
-	for (i = 0; path[i] != '\0'; i++)
 	{
-		if (path[i] == ':')
-			counter++;
+		this_path = malloc(strlen(typed_path) + 1);
+		if (this_path == NULL)
+			return (NULL);
+		strcpy(this_path, typed_path);
+		return (this_path);
 	}
+	path = _getenv("PATH");
+	counter = count_paths(path);
 	paths_array = malloc(counter * sizeof(char *));
 	if (paths_array == NULL)
 		return (NULL);
@@ -36,18 +38,15 @@ char *_which(char *typed_path)
 		if (this_path == NULL)
 			return (NULL);
 		strcpy(this_path, paths_array[i]);
-		strcat(this_path, "/");
-		strcat(this_path, typed_path);
+		strcat(strcat(this_path, "/"), typed_path);
 		if (stat(this_path, &st) == 0)
 		{
-			free(paths_array);
-			free(path);
+			free_path(path, paths_array);
 			return (this_path);
 		}
 		free(this_path);
 	}
-	free(paths_array);
-	free(path);
+	free_path(path, paths_array);
 	return (NULL);
 }
 
@@ -70,4 +69,35 @@ int check_empty(char *buffer)
 			return (1);
 	}
 	return (0);
+}
+
+/**
+ * free_path - frees the memeory allocated for the path
+ * @path: the path
+ * @path_array: the array of paths
+ *
+ * Return: void
+ */
+
+void free_path(char *path, char **paths_array)
+{
+	free(paths_array);
+	free(path);
+}
+
+/**
+ * count_paths - counth the numebr of elements in the path
+ * @path: the path
+ *
+ * Return: the number of elements
+ */
+
+int count_paths(char *path)
+{
+	int counter = 0, i = 0;
+
+	for (i = 0; path[i] != '\0'; i++)
+		if (path[i] == ':')
+			counter++;
+	return (counter);
 }
