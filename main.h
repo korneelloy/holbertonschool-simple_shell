@@ -37,5 +37,7 @@ char *_getenv(const char *identifier);
 int check_empty(char *buffer);
 void free_path(char *path, char **paths_array);
 int count_paths(char *path);
+void _env(void);
+void free_as_a_bird(char *command, char *buffer, char **arguments);
 
 #endif

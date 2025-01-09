@@ -101,3 +101,19 @@ int count_paths(char *path)
 			counter++;
 	return (counter);
 }
+
+/**
+ * _env - function to print the environment omitting spaces.
+ *
+ * Return: Nothing it's void.
+ */
+void _env(void)
+{
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+}

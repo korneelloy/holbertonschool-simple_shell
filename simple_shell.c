@@ -29,21 +29,21 @@ void simple_shell(void)
 			continue;
 		}
 		arguments = transform_to_array(buffer, size_read);
+		if (str_comparing(arguments[0], "env") == 0)
+		{
+			_env();
+			continue;
+		}
 		command = _which(arguments[0]);
 		if (command == NULL)
 			fprintf(stderr, "%s\n", strerror(errno));
 		if (command != NULL)
 		{
 			child_process = fork();
-			if (child_process == 0)
-			{
-				if (execve(command, arguments, environ) == -1)
-					fprintf(stderr, "%s\n", strerror(errno));
-			}
+			if (child_process == 0 && execve(command, arguments, environ) == -1)
+				fprintf(stderr, "%s\n", strerror(errno));
 			wait(&status);
 		}
-		free(command);
-		free(buffer);
-		free_memory(arguments);
+		free_as_a_bird(command, buffer, arguments);
 	}
 }
