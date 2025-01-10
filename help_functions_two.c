@@ -107,7 +107,7 @@ int count_paths(char *path)
  *
  * Return: Nothing it's void.
  */
-void _env(void)
+void _env(char *buffer, char **arguments)
 {
 	int i = 0;
 
@@ -116,4 +116,6 @@ void _env(void)
 		printf("%s\n", environ[i]);
 		i++;
 	}
+	free(buffer);
+	free_memory(arguments);
 }

@@ -31,7 +31,7 @@ void simple_shell(void)
 		arguments = transform_to_array(buffer, size_read);
 		if (str_comparing(arguments[0], "env") == 0)
 		{
-			_env();
+			_env(buffer, arguments);
 			continue;
 		}
 		command = _which(arguments[0]);
